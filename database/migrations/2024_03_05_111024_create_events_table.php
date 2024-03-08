@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->date('date');
             $table->string('location');
+            $table->string('image_path');
             $table->unsignedBigInteger('organizer_id');
             $table->foreign('organizer_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->unsignedBigInteger('category_id');
