@@ -140,43 +140,24 @@ background-image: url(https://images.unsplash.com/photo-1532564643043-0436a047f3
                 background-image: url(https://images.unsplash.com/photo-1550184658-ff6132a71714?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2180&q=80);
             } */
     </style>
-
-    <div class="event-details container">
-        <div class="event-info">
-            <img id="imgd" src="{{ asset('storage/' . $events->image_path) }}" alt="Event Image">
-            <h1> {{ $events->title }}</h1>
-            <h5>Date: {{ $events->date }} </h5>
-            <h5>Description: {{ $events->description }} </h5>
-            <h6>Places : {{ $events->nb_place }} </h6>
-            <p>Description: {{ $events->description }} </p>
-            <a href="/" class="btn btn-success back">Back to Events</a>
-            <a href="/generateticket/{{$events->id}}" class="btn btn-success back">GRAB A TICKET</a>
-        </div>
-
-        {{-- <div class="ticket ticket-1">
-            <!-- Event Date -->
-            <div class="date">
-                <span class="day">{{ \Carbon\Carbon::parse($events->date)->format('d') }}</span>
-                <span class="month-and-time">{{ \Carbon\Carbon::parse($events->date)->format('M') }}</br><span
-                        class="small">{{ \Carbon\Carbon::parse($events->date)->format('h:iA') }}</span></span>
-            </div>
-
-            <!-- Event Title -->
-            <div class="artist">
-                <span class="name">{{ $events->title }}</span>
-                </br>
-                <span class="live small">LIVE</span>
-            </div>
-
-            <div class="rip">
-            </div>
-
-            <!-- Buy Ticket Button -->
-            <div class="cta">
-                <a href="/generateticket/{{$events->id}}" class="buy">GRAB A TICKET</a>
-            </div>
-        </div> --}}
-
-
+<div class="ticket ticket-1">
+    <!-- Event Date -->
+    <div class="date">
+        <span class="day">{{ \Carbon\Carbon::parse($event->date)->format('d') }}</span>
+        <span class="month-and-time">{{ \Carbon\Carbon::parse($event->date)->format('M') }}</br><span
+                class="small">{{ \Carbon\Carbon::parse($event->date)->format('h:iA') }}</span></span>
     </div>
+
+    <!-- Event Title -->
+    <div class="artist">
+        <span class="name">{{ $event->title }}</span>
+        </br>
+        <span class="live small">LIVE</span>
+    </div>
+
+    <div class="rip">
+    </div>
+
+</div>
 @endsection
+
