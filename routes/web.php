@@ -7,6 +7,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategorieController;
 
+use App\Http\Controllers\TicketController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,14 +29,14 @@ require __DIR__.'/auth.php';
 
 Route::resource('/home',EventsController::class);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/index',[HomeController::class,'index'])->name('index')->middleware(['auth', 'verified'])->name('index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/generateticket/{id}',[TicketController::class,'generate']);
 });
 
 Route::get('/index',[HomeController::class,'index'])->name('index');
@@ -49,3 +52,6 @@ Route::resource('/categorie', CategorieController::class);
 Route::get('/details/{id}', [EventsController::class, 'details'])->name('details');
 
 Route::get('/search', [EventsController::class, 'search']);
+
+Route::get('/statistic',[DashboardController::class, 'statistic']);
+

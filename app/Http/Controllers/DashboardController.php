@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Events;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -21,5 +22,11 @@ class DashboardController extends Controller
 
     }
 
-    
+
+    public function statistic()
+    {
+        $userNumber = User::count();
+        $eventNumber = Events::count();
+        return view('event.statistic', compact('userNumber', 'eventNumber'));
+    }
 }

@@ -1,6 +1,11 @@
 @extends('layouts.nav')
 @section('content')
 
+@if($message = Session::get('status'))
+<div class="alert alert-success" role="alert">
+    {{$message}}
+</div>
+@endif
     {{-- recherche  --}}
     <form class="d-flex container p-6 rounded">
         <input class="form-control me-6 rounded" type="text" placeholder="Search" aria-label="Search" id="search_title">

@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('resirvation', function (Blueprint $table) {
+        Schema::create('ticket', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->float('prix');
+            $table->string('type');
+            $table->unsignedBigInteger('events_id');
+            $table->foreign('events_id')->references('id')->on('events')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('resirvation');
+        Schema::dropIfExists('ticket');
     }
 };

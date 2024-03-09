@@ -1,8 +1,7 @@
 @extends('layouts.nav')
 @section('content')
     <button type="button" class="btn btn-secondary mb-6 mr-6 mt-6" style="color: #000" data-toggle="modal"
-        data-target="#exampleModal">Ajouter un
-        événement</button>
+        data-target="#exampleModal">Ajouter un événement</button>
 
     {{-- card --}}
     <div class="container">
@@ -91,6 +90,13 @@
                                             <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
                                         @endforeach
 
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="category_id">Type d'événement:</label>
+                                    <select class="form-control" id="type" name="type">
+                                            <option value="automatic">automatic</option>
+                                            <option value="manuel">manuel</option>
                                     </select>
                                 </div>
                                 <div class="form-group">

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->enum("status",["accepted","rejected"])->default(null);
             $table->boolean("autoAccept")->default(true);
             $table->integer('nb_place');
+            $table->enum('type',['automatic','manuel']);
             $table->timestamps();
         });
     }
