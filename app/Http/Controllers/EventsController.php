@@ -23,7 +23,7 @@ class EventsController extends Controller
      public function index()
      {
          $userId = Auth::id();
-         $events = Events::where('organizer_id', $userId)->with('categorie')->paginate(10);
+         $events = Events::where('organizer_id', $userId)->with('categorie')->paginate(3);
          $categories = Categorie::all();
 
          return view('event.home', compact('events', 'categories'));
@@ -64,6 +64,7 @@ class EventsController extends Controller
         $event->organizer_id =$user_id;
         $event->categorie_id = $request->categorie_id;
         $event->status = 'rejected';
+        $event->type=$request->type;
         $event->save();
 
     return redirect('/home');
