@@ -8,10 +8,10 @@
             <aside class="col-md-2 bg-dark text-light p-4">
                 <ul class="list-unstyled">
                     <li>
-                        <h5 class="mb-4">Dashboard</h5>
+                        <h5 class="mb-4">Dashboard de l'Admin</h5>
                     </li>
-                    <li><a href="dashAdmin" class="text-light d-block mb-4">Evenements</a></li>
-                    <li><a href="categorie" class="text-light d-block mb-4">Categories</a></li>
+                    <li><a href="/dashAdmin" class="text-light d-block mb-4">Evenements</a></li>
+                    <li><a href="/categorie" class="text-light d-block mb-4">Categories</a></li>
                     <li><a href="statistic" class="text-light d-block mb-6">Statistiques</a></li>
                     <li><a href="" class="text-light d-block mb-8">Utilisateurs</a></li>
                 </ul>
