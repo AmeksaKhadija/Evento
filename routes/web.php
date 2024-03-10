@@ -52,6 +52,7 @@ Route::resource('/categorie', CategorieController::class);
 Route::get('/details/{id}', [EventsController::class, 'details'])->name('details');
 
 Route::get('/search', [EventsController::class, 'search']);
+Route::get('/search', [EventsController::class, 'filterByCategory']);
 
 Route::get('/statistic',[DashboardController::class, 'statistic']);
 

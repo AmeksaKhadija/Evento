@@ -10,11 +10,12 @@
         <input class="form-control me-6 rounded" type="text" placeholder="Search by Title" aria-label="Search by Title"
             id="search_title">
         <select class="form-select me-3" id="category_filter">
-            <option value="">All Categories</option>
-            <option value="category1">Category 1</option>
-            <option value="category2">Category 2</option>
-            <!-- Add more options according to your categories -->
-        </select>
+            <select class="form-control" id="categorie_id" name="categorie_id">
+                @foreach ($categories as $categorie)
+                    <option value="{{ $categorie->id }}">{{ $categorie->name }}
+                    </option>
+                @endforeach
+            </select>
     </form>
 
     {{-- card --}}
