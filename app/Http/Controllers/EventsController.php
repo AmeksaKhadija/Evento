@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Events;
 use App\Models\Categorie;
+use App\Models\Reservation;
+
 use App\Http\Requests\StoreEventsRequest;
 use App\Http\Requests\UpdateEventsRequest;
 use Illuminate\Support\Facades\Storage;
@@ -11,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class EventsController extends Controller
 {
@@ -177,5 +180,37 @@ public function search(Request $request){
     }
 
     return view('event.index', compact('events'));
+
 }
+
+
+    public function validateTicket(){
+        $userId=Auth::user()->id;
+        $reservations = DB::table('reservations')
+        ->join('events', 'reservations.event_id', '=', 'events.id')
+        ->join('users', 'reservations.user_id', '=', 'users.id')
+        ->where('events.organizer_id', '=', $userId)
+        ->where('reservations.status', 'LIKE', 'pending')
+        ->select('reservations.*', 'events.image_path as image', 'events.title as event_title', 'users.name as user_name','users.email as user_email')
+        ->get();
+        return view('event.validateTicket',compact('reservations'));
+
+    }
+
+    public function approvedTicket($idReservation){
+        $reservation=Reservation::find($idReservation);
+        $reservation->status='approved';
+        $reservation->save();
+        return redirect('/validateTicket');
+
+    }
+
+    public function RejecteTicket($idReservation){
+        $reservation=Reservation::find($idReservation);
+        $reservation->status='rejected';
+        $reservation->save();
+        return redirect('/validateTicket');
+
+    }
+
 }

@@ -27,11 +27,6 @@ class Events extends Model
         return $this->belongsTo(Categorie::class);
     }
 
-
-    // public function category(){
-    //     return $this->belongsTo(Category::class);
-    // }
-
     public function tickets(){
         return $this->hasMany(Ticket::class);
     }
