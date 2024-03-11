@@ -51,8 +51,9 @@ Route::resource('/categorie', CategorieController::class);
 
 Route::get('/details/{id}', [EventsController::class, 'details'])->name('details');
 
-Route::get('/search', [EventsController::class, 'search']);
-Route::get('/search', [EventsController::class, 'filterByCategory']);
+Route::get('/search/{search}', [EventsController::class, 'search']);
+
+Route::get('/category', [EventsController::class, 'filterByCategory']);
 
 Route::get('/statistic',[DashboardController::class, 'statistic']);
 
@@ -60,7 +61,7 @@ Route::get('/statistic',[DashboardController::class, 'statistic']);
 Route::get('/statisticOrg',[HomeController::class, 'statisticOrg']);
 
 Route::get('/validateTicket',[EventsController::class, 'validateTicket']);
+
 Route::get('/rejected/{id}',[EventsController::class, 'RejecteTicket']);
 
 Route::get('/approved/{id}',[EventsController::class, 'approvedTicket']);
-
