@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Events;
 use App\Models\Categorie;
 use App\Models\Reservation;
-
 use App\Http\Requests\StoreEventsRequest;
 use App\Http\Requests\UpdateEventsRequest;
 use Illuminate\Support\Facades\Storage;
@@ -155,33 +154,36 @@ class EventsController extends Controller
         return view('event.detail', compact('events'));
     }
 
-    // public function search(Request $request)
-
-    // {
-
-    //     $keyword = $request->input('title_s');
-    //     $events = Events::where('title', 'like', '%' . $keyword . '%')->paginate(10);
-
-    //     return view('event.searchResult',['events'=>$events]);
-    // }
-// }
-
-public function search(Request $request){
-    // dd($request);
-    $keyword = $request->input('keyword');
-
-    $events = Events::when($keyword, function ($query) use ($keyword) {
-        return $query->where('title', 'like', '%' . $keyword . '%');
-    })->paginate(3);
+    // search
+    public function search($search)
+        {
+            if ($search == "AllEventSearch") {
+                $events = Events::all();
+            } else {
+                $events = Events::where('title', 'like', '%' . $search . '%')->get();
+            }
+            return view('event.pagination', compact('events'));
+        }
 
 
-    if ($request->ajax()) {
-        return view('event.pagination', compact('events'))->render();
+    // filtrage
+    public function filterByCategory(Request $request)
+    {
+        $userId = Auth::id();
+        $categoryId = $request->input('category_id');
+
+        $events = Events::where('organizer_id', $userId)
+                        ->whereHas('categorie', function ($query) use ($categoryId) {
+                            $query->where('id', $categoryId);
+                        })
+                        ->with('categorie')
+                        ->paginate(3);
+
+        $categories = Categorie::all();
+
+        return view('event.index', compact('events', 'categories'));
     }
 
-    return view('event.index', compact('events'));
-
-}
 
 
     public function validateTicket(){

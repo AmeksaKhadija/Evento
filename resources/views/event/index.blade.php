@@ -8,12 +8,13 @@
     {{-- recherche  --}}
     <form class="d-flex container p-6 rounded">
         <input class="form-control me-6 rounded" type="text" placeholder="Search by Title" aria-label="Search by Title"
-            id="search_title">
-        <select class="form-select me-3" id="category_filter">
-            <option value="">All Categories</option>
-            <option value="category1">Category 1</option>
-            <option value="category2">Category 2</option>
-            <!-- Add more options according to your categories -->
+            id="search_title" onkeyup="search()">
+        <select class="form-control" id="categorie_id" name="categorie_id">
+            @foreach ($categories as $categorie)
+                <option value="{{ $categorie->id }}">{{ $categorie->name }}
+                </option>
+            @endforeach
+
         </select>
     </form>
 
@@ -24,32 +25,22 @@
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('#search_title, #category_filter').on('change keyup', function() {
-                fetchProducts(1);
-            });
+        function search() {
+            var valueInput = document.getElementById('search_title').value;
 
-            $(document).on('click', '.pagination a', function(e) {
-                e.preventDefault();
-                var page = $(this).attr('href').split('page=')[1];
-                fetchProducts(page);
-            });
-
-            function fetchProducts(page) {
-                var keyword = $('#search_title').val().trim();
-                var category = $('#category_filter').val();
-                $.ajax({
-                    url: '/search',
-                    data: {
-                        page: page,
-                        keyword: keyword,
-                        category: category
-                    },
-                    success: function(data) {
-                        $('#events').html(data);
-                    }
-                });
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("events").innerHTML = xhttp.responseText;
+                }
+            };
+            if (valueInput == '') {
+                var url = '/search/AllEventSearch';
+            } else {
+                var url = '/search/' + valueInput;
             }
-        });
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        }
     </script>
 @endsection
