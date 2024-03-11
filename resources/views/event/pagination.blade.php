@@ -26,7 +26,6 @@
                 </div>
             </div>
             @endforeach
-            {{-- {{ $events->links() }} --}}
             @endif
         </div>
     </div>

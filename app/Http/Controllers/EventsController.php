@@ -10,7 +10,6 @@ use App\Http\Requests\UpdateEventsRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -26,9 +25,10 @@ class EventsController extends Controller
      {
          $userId = Auth::id();
          $events = Events::where('organizer_id', $userId)->with('categorie')->paginate(3);
+
          $categories = Categorie::all();
 
-         return view('event.home', compact('events', 'categories'));
+         return view('event.index', compact('events', 'categories'));
      }
 
     /**
