@@ -10,7 +10,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $events = Events::all();
+        $events = Events::paginate(3);
         return view('event.dashAdmin',compact('events'));
     }
 
