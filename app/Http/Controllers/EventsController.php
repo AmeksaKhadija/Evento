@@ -28,7 +28,7 @@ class EventsController extends Controller
 
          $categories = Categorie::all();
 
-         return view('event.index', compact('events', 'categories'));
+         return view('event.home', compact('events', 'categories'));
      }
 
     /**
@@ -155,33 +155,34 @@ class EventsController extends Controller
     }
 
     // search
-    public function search($search)
-        {
-            if ($search == "AllEventSearch") {
-                $events = Events::all();
-            } else {
-                $events = Events::where('title', 'like', '%' . $search . '%')->get();
-            }
-            return view('event.pagination', compact('events'));
+    public function search($title , $category)
+    {
+        if($title == "AllEventSearch" && $category != "all" ){
+            $events = Events::where('categorie_id' , '=' , $category )->get();
         }
+        elseif($title != "AllEventSearch" && $category == "all" ){
+            $events = Events::where('title', 'like', '%' . $title . '%')->get();
+        }
+        elseif ($title == "AllEventSearch" && $category == "all" ) {
+            $events = Events::all();
+        }
+        else {
+            $events = Events::where('title', 'like', '%' . $title . '%')->where('categorie_id' , '=' , $category )->get();
+        }
+        return view('event.pagination', compact('events'));
+    }
+
 
 
     // filtrage
-    public function filterByCategory(Request $request)
+   public function filterByCategory($filter)
     {
-        $userId = Auth::id();
-        $categoryId = $request->input('category_id');
-
-        $events = Events::where('organizer_id', $userId)
-                        ->whereHas('categorie', function ($query) use ($categoryId) {
-                            $query->where('id', $categoryId);
-                        })
-                        ->with('categorie')
-                        ->paginate(3);
-
-        $categories = Categorie::all();
-
-        return view('event.index', compact('events', 'categories'));
+        if ($filter == "AllEventSearch" || $filter == "all") {
+            $events = Events::all();
+        } else {
+            $events = Events::where('categorie_id' , '=' , $filter )->get();
+        }
+        return view('event.pagination', compact('events'));
     }
 
 

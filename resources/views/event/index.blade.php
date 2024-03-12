@@ -9,7 +9,8 @@
     <form class="d-flex container p-6 rounded">
         <input class="form-control me-6 rounded" type="text" placeholder="Search by Title" aria-label="Search by Title"
             id="search_title" onkeyup="search()">
-        <select class="form-control" id="categorie_id" name="categorie_id">
+        <select class="form-control" id="categorie_id" onchange="Filter()" name="categorie_id">
+            <option value="all">All categories</option>
             @foreach ($categories as $categorie)
                 <option value="{{ $categorie->id }}">{{ $categorie->name }}
                 </option>
@@ -54,13 +55,14 @@
     </div>
 
 
-  
+
 
     </div>
 
     <script>
         function search() {
             var valueInput = document.getElementById('search_title').value;
+            var categorie_id = document.getElementById('categorie_id').value;
 
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -69,9 +71,28 @@
                 }
             };
             if (valueInput == '') {
-                var url = '/search/AllEventSearch';
+                var url = '/search/AllEventSearch/all';
             } else {
-                var url = '/search/' + valueInput;
+                var url = '/search/' + valueInput + '/' + categorie_id ;
+            }
+
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        }
+
+        function Filter() {
+            var valueInput = document.getElementById('categorie_id').value;
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("events").innerHTML = xhttp.responseText;
+                }
+            };
+            if (valueInput == '') {
+                var url = '/Filter/AllEventSearch';
+            } else {
+                var url = '/Filter/' + valueInput;
             }
             xhttp.open("GET", url, true);
             xhttp.send();
