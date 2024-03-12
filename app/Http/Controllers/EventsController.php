@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Events;
 use App\Models\Categorie;
-use App\Models\Reservation;
 use App\Http\Requests\StoreEventsRequest;
 use App\Http\Requests\UpdateEventsRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class EventsController extends Controller
 {
@@ -24,11 +23,10 @@ class EventsController extends Controller
      public function index()
      {
          $userId = Auth::id();
-         $events = Events::where('organizer_id', $userId)->with('categorie')->paginate(3);
-
+         $events = Events::where('organizer_id', $userId)->with('categorie')->paginate(10);
          $categories = Categorie::all();
 
-         return view('event.index', compact('events', 'categories'));
+         return view('event.home', compact('events', 'categories'));
      }
 
     /**
@@ -66,7 +64,6 @@ class EventsController extends Controller
         $event->organizer_id =$user_id;
         $event->categorie_id = $request->categorie_id;
         $event->status = 'rejected';
-        $event->type=$request->type;
         $event->save();
 
     return redirect('/home');
@@ -154,65 +151,17 @@ class EventsController extends Controller
         return view('event.detail', compact('events'));
     }
 
-    // search
-    public function search($search)
-        {
-            if ($search == "AllEventSearch") {
-                $events = Events::all();
-            } else {
-                $events = Events::where('title', 'like', '%' . $search . '%')->get();
-            }
-            return view('event.pagination', compact('events'));
+
+public function search($search)
+    {
+        if ($search == "AllEventSearch") {
+            $events = Events::all();
+        } else {
+            $events = Events::where('title', 'like', '%' . $search . '%')
+                        ->get();
+
         }
 
-
-    // filtrage
-    public function filterByCategory(Request $request)
-    {
-        $userId = Auth::id();
-        $categoryId = $request->input('category_id');
-
-        $events = Events::where('organizer_id', $userId)
-                        ->whereHas('categorie', function ($query) use ($categoryId) {
-                            $query->where('id', $categoryId);
-                        })
-                        ->with('categorie')
-                        ->paginate(3);
-
-        $categories = Categorie::all();
-
-        return view('event.index', compact('events', 'categories'));
+        return view('event.pagination', compact('events'));
     }
-
-
-
-    public function validateTicket(){
-        $userId=Auth::user()->id;
-        $reservations = DB::table('reservations')
-        ->join('events', 'reservations.event_id', '=', 'events.id')
-        ->join('users', 'reservations.user_id', '=', 'users.id')
-        ->where('events.organizer_id', '=', $userId)
-        ->where('reservations.status', 'LIKE', 'pending')
-        ->select('reservations.*', 'events.image_path as image', 'events.title as event_title', 'users.name as user_name','users.email as user_email')
-        ->get();
-        return view('event.validateTicket',compact('reservations'));
-
-    }
-
-    public function approvedTicket($idReservation){
-        $reservation=Reservation::find($idReservation);
-        $reservation->status='approved';
-        $reservation->save();
-        return redirect('/validateTicket');
-
-    }
-
-    public function RejecteTicket($idReservation){
-        $reservation=Reservation::find($idReservation);
-        $reservation->status='rejected';
-        $reservation->save();
-        return redirect('/validateTicket');
-
-    }
-
 }
