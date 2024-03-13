@@ -51,7 +51,7 @@ class EventsController extends Controller
     {
         $imagePath = null;
 
-        $user_id = auth()->user()->id; //renvoie 1
+        $user_id = auth()->user()->id;
     if ($request->hasFile('image_path')) {
         $imagePath = $request->file('image_path')->store('images', 'public');
     }
