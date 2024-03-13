@@ -6,6 +6,7 @@
                     <p>No result found.</p>
                 </div>
             @else
+            
                 @foreach ($events as $index => $event)
                     @if ($index % 3 == 0)
         </div>

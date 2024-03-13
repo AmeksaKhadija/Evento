@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Events;
 use App\Models\Categorie;
-use App\Models\Reservation;
 use App\Http\Requests\StoreEventsRequest;
 use App\Http\Requests\UpdateEventsRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class EventsController extends Controller
 {
@@ -24,8 +23,7 @@ class EventsController extends Controller
      public function index()
      {
          $userId = Auth::id();
-         $events = Events::where('organizer_id', $userId)->with('categorie')->paginate(3);
-
+         $events = Events::where('organizer_id', $userId)->with('categorie')->paginate(10);
          $categories = Categorie::all();
 
          return view('event.home', compact('events', 'categories'));
@@ -66,7 +64,6 @@ class EventsController extends Controller
         $event->organizer_id =$user_id;
         $event->categorie_id = $request->categorie_id;
         $event->status = 'rejected';
-        $event->type=$request->type;
         $event->save();
 
     return redirect('/home');
@@ -154,11 +151,13 @@ class EventsController extends Controller
         return view('event.detail', compact('events'));
     }
 
+
     // search
     public function search($title , $category)
     {
         if($title == "AllEventSearch" && $category != "all" ){
             $events = Events::where('categorie_id' , '=' , $category )->get();
+
         }
         elseif($title != "AllEventSearch" && $category == "all" ){
             $events = Events::where('title', 'like', '%' . $title . '%')->get();
@@ -174,6 +173,7 @@ class EventsController extends Controller
 
 
 
+
     // filtrage
    public function filterByCategory($filter)
     {
@@ -182,9 +182,9 @@ class EventsController extends Controller
         } else {
             $events = Events::where('categorie_id' , '=' , $filter )->get();
         }
+
         return view('event.pagination', compact('events'));
     }
-
 
 
     public function validateTicket(){
@@ -215,5 +215,4 @@ class EventsController extends Controller
         return redirect('/validateTicket');
 
     }
-
 }

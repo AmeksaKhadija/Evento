@@ -1,6 +1,10 @@
 <mxfile host="65bd71144e">
     <diagram id="sxKFUbfp4cXT9iT7OxN-" name="Page-1">
+<<<<<<< HEAD
         <mxGraphModel dx="1293" dy="916" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+=======
+        <mxGraphModel dx="1099" dy="779" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+>>>>>>> bf488a1b1352b19fb6add635ed040a0560fcdbe8
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -155,7 +159,11 @@
                         <mxPoint x="65" y="610" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
+<<<<<<< HEAD
                 <mxCell id="33" value="Evento" style="shape=umlFrame;whiteSpace=wrap;html=1;width=100;height=30;fontStyle=1" parent="1" vertex="1">
+=======
+                <mxCell id="33" value="YouEvent" style="shape=umlFrame;whiteSpace=wrap;html=1;width=100;height=30;fontStyle=1" parent="1" vertex="1">
+>>>>>>> bf488a1b1352b19fb6add635ed040a0560fcdbe8
                     <mxGeometry x="110" y="22" width="720" height="1380" as="geometry"/>
                 </mxCell>
                 <mxCell id="34" value="Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">

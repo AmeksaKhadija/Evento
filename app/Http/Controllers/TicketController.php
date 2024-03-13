@@ -32,13 +32,12 @@ class TicketController extends Controller
         }else{
             $reservation->status='pending';
             $reservation->save();
+
             $event->nb_place=$event->nb_place-1;
             $event->save();
-            return redirect('/index')->with('status','votre reservation est enregistré, Merci attendre la validation organisateur');;
+            return redirect('/index')->with('status','votre reservation est enregistré, Merci attendre la validation organisateur');
+
 
         }
-
-
-
     }
 }
