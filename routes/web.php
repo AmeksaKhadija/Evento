@@ -27,7 +27,7 @@ Route::get('/', function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('/home',EventsController::class);
+Route::resource('/home',EventsController::class)->middleware('OrganisateurMiddleware');;
 
 Route::get('/index',[HomeController::class,'index'])->name('index')->middleware(['auth', 'verified'])->name('index');
 
@@ -43,7 +43,7 @@ Route::get('/index',[HomeController::class,'index'])->name('index');
 
 Route::put('/events/{id}', 'EventsController@update')->name('events.update');
 
-Route::get('/dashAdmin',[DashboardController::class, 'index']);
+Route::get('/dashAdmin',[DashboardController::class, 'index'])->middleware('AdminMiddleware');
 
 Route::get('/accepted/{id}',[DashboardController::class, 'accepted']);
 

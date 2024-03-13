@@ -25,21 +25,13 @@
                             <div class="col-md-6">
                                 <div class="card user-card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Users</h5>
+                                        <h5 class="card-title">My events</h5>
                                         <div class="card-text">Total Events</div>
                                         <div class="card-number">{{ $myEvents }}</div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="card event-card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Events</h5>
-                                        <div class="card-text">Total Events rejected</div>
-                                        <div class="card-number">{{ $eventRejected }}</div>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>

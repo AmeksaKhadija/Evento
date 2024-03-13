@@ -26,10 +26,14 @@ class TicketController extends Controller
         if($event->type=='automatic'){
             $reservation->status='approved';
             $reservation->save();
+            $event->nb_place=$event->nb_place-1;
+            $event->save();
             return view('success', compact('userid','event'));
         }else{
             $reservation->status='pending';
             $reservation->save();
+            $event->nb_place=$event->nb_place-1;
+            $event->save();
             return redirect('/index')->with('status','votre reservation est enregistré, Merci attendre la validation organisateur');;
 
         }
